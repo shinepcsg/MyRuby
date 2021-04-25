@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Temp
+/Library
+/MyRuby.sln
+/Assembly-CSharp.csproj
