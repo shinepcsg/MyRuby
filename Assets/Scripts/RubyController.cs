@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
-    private void Start()
+    Rigidbody2D rigidbody2d;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        //QualitySettings.vSyncCount = 0;
-        //Application.targetFrameRate = 10;
+        rigidbody2d = GetComponent<Rigidbody2D>();
     }
     public float speed = 5f;
     void Update()
@@ -26,13 +28,13 @@ public class RubyController : MonoBehaviour
             Debug.Log("숫자 1을 눌렀다");
 
 
-        float horizontal; 
-        float vertical;
+        float horizontal = 0;
+        float vertical = 0;
 
         // 방법1이나 2중 한개만 있으면 됨.
         // 방법1 : 축 이용방법 ( Project setting -> Input Manager Axis에 값을 등록하여 사용, 에디터 설정도 참고하여야 해서 불편
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        //horizontal = Input.GetAxis("Horizontal");
+        //vertical = Input.GetAxis("Vertical");
 
         // 방법 2 : 키코드를 직접 입력하여 키입력 감지. 부드러운 움직임 제거
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
@@ -47,13 +49,13 @@ public class RubyController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
             vertical = -1;
-        // 방법 2 끝.
+        //방법 2 끝.
 
-        //Debug.Log(horizontal);
+       //Debug.Log(horizontal);
 
-        Vector2 position = transform.position;
+       Vector2 position = rigidbody2d.position;
         position.x = position.x + speed * horizontal * Time.deltaTime;
         position.y = position.y + speed * vertical * Time.deltaTime;
-        transform.position = position;
+        rigidbody2d.MovePosition(position);
     }
 }
