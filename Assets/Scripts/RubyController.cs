@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
+    public float speed = 5f;
+
+    public int maxHealth = 5;
+    int currentHealth;
+    public int health { get { return currentHealth; } }
+
     Rigidbody2D rigidbody2d;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+
+        currentHealth = maxHealth;
     }
-    public float speed = 5f;
+
+
     void Update()
     {
         //Input -> 모르는 클래스 등장 "Unity Input"검색(네이버 검색보다 구글 검색)
@@ -54,8 +63,14 @@ public class RubyController : MonoBehaviour
        //Debug.Log(horizontal);
 
        Vector2 position = rigidbody2d.position;
-        position.x = position.x + speed * horizontal * Time.deltaTime;
-        position.y = position.y + speed * vertical * Time.deltaTime;
+        position.x += speed * horizontal * Time.deltaTime;
+        position.y += speed * vertical * Time.deltaTime;
         rigidbody2d.MovePosition(position);
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        Debug.Log(currentHealth + "/" + maxHealth);
     }
 }
