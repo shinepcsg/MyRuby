@@ -43,14 +43,22 @@ public class EnemyController : MonoBehaviour
 
         rigidbody2D.MovePosition(position);
     }
-    void OnCollisionEnter2D(Collision2D other)
+
+    private void OnCollisionEnter2D(Collision2D other) // isTrigger 모두 해제되어있는 것들끼리 충돌
     {
+        Debug.Log($"OnCollisionEnter2D :: {name}에 {other.gameObject.name}이 충돌 했습니다");
+
         RubyController player = other.gameObject.GetComponent<RubyController>();
 
         if (player != null)
         {
             player.ChangeHealth(-1);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"OnTriggerEnter2D :: {name}에 {other}이 충돌 했습니다");
     }
 
 }
