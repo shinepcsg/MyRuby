@@ -7,17 +7,28 @@ public class RubyController : MonoBehaviour
     public float speed = 5f;
 
     public int maxHealth = 5;
-    int currentHealth;
-    public int health { get { return currentHealth; } }
+    public int currentHealth;
+    public int Health { get { return currentHealth; } }
 
     Rigidbody2D rigidbody2d;
 
-    // Start is called before the first frame update
+
+    public float timeInvincible = 2.0f;
+    bool isInvincible;
+    float invincibleTimer;
+
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
 
         currentHealth = maxHealth;
+
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+                isInvincible = false;
+        }
     }
 
 
@@ -66,10 +77,26 @@ public class RubyController : MonoBehaviour
         position.x += speed * horizontal * Time.deltaTime;
         position.y += speed * vertical * Time.deltaTime;
         rigidbody2d.MovePosition(position);
+
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+                isInvincible = false;
+        }
     }
 
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+        {
+            if (isInvincible)
+                return;
+
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+        }
+
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);
     }
