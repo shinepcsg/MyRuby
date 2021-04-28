@@ -10,14 +10,13 @@ public class RubyController : MonoBehaviour
     public int currentHealth;
     public int Health { get { return currentHealth; } }
 
-    Rigidbody2D rigidbody2d;
-
+    private Rigidbody2D rigidbody2d;
 
     public float timeInvincible = 2.0f;
-    bool isInvincible;
-    float invincibleTimer;
+    private bool isInvincible;
+    private float invincibleTimer;
 
-    void Start()
+    private void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
 
@@ -31,22 +30,20 @@ public class RubyController : MonoBehaviour
         }
     }
 
-
-    void Update()
+    private void Update()
     {
         //Input -> 모르는 클래스 등장 "Unity Input"검색(네이버 검색보다 구글 검색)
-        // 매뉴얼 페이지 확인, 엄청 많은 API중 한개 -> 많은 API를 모두 외울 수 없다. 
+        // 매뉴얼 페이지 확인, 엄청 많은 API중 한개 -> 많은 API를 모두 외울 수 없다.
         // 사전 처럼 그때 그때 필요한것들을 참고해서 개발하자 -> 샘플 코드만 보고 적용.
         // 예상한바로 작동안하면 매뉴얼 정독
-        // https://docs.unity3d.com/kr/current/ScriptReference/Input.html 
+        // https://docs.unity3d.com/kr/current/ScriptReference/Input.html
         // https://docs.unity3d.com/kr/530/ScriptReference/Input.html
 
-        //Input.GetKey      // 키를 누르고 있을때 
+        //Input.GetKey      // 키를 누르고 있을때
         //Input.GetKeyDown  // 키를 눌렀을때
         //Input.GetKeyUp    // 누른 키를 땠을때
         if (Input.GetKeyDown(KeyCode.Alpha1))
             Debug.Log("숫자 1을 눌렀다");
-
 
         float horizontal = 0;
         float vertical = 0;
@@ -63,7 +60,6 @@ public class RubyController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
             horizontal = 1;
 
-
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
             vertical = 1;
 
@@ -71,9 +67,9 @@ public class RubyController : MonoBehaviour
             vertical = -1;
         //방법 2 끝.
 
-       //Debug.Log(horizontal);
+        //Debug.Log(horizontal);
 
-       Vector2 position = rigidbody2d.position;
+        Vector2 position = rigidbody2d.position;
         position.x += speed * horizontal * Time.deltaTime;
         position.y += speed * vertical * Time.deltaTime;
         rigidbody2d.MovePosition(position);
@@ -97,7 +93,9 @@ public class RubyController : MonoBehaviour
             invincibleTimer = timeInvincible;
         }
 
+        int originalHP = currentHealth;
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log(currentHealth + "/" + maxHealth);
+        //Debug.Log(currentHealth + "/" + maxHealth);
+        Debug.Log($"{originalHP}-> {currentHealth}, 최대체력 {maxHealth}");// "1 -> 2, 최대체력 5"
     }
 }
