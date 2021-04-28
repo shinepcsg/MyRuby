@@ -90,5 +90,9 @@ public class RubyController : MonoBehaviour
         projectile.Launch(lookDirection, 300);
 
         animator.SetTrigger("Launch");
+
+        Instantiate(bulletEffectPrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
     }
+
+    public GameObject bulletEffectPrefab;
 }

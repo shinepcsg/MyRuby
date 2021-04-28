@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     private bool broken = true;
 
     private Animator animator;
+    public ParticleSystem smokeEffect;
 
     private void Start()
     {
@@ -70,6 +71,7 @@ public class EnemyController : MonoBehaviour
     //Public because we want to call it from elsewhere like the projectile script
     public void Fix()
     {
+        smokeEffect.Stop();
         broken = false;
         rigidbody2D.simulated = false;
         //optional if you added the fixed animation
