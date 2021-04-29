@@ -79,7 +79,7 @@ public class RubyController : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
 
-        Debug.Log(currentHealth + "/" + maxHealth);
+        UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     private void Launch()
@@ -90,9 +90,5 @@ public class RubyController : MonoBehaviour
         projectile.Launch(lookDirection, 300);
 
         animator.SetTrigger("Launch");
-
-        Instantiate(bulletEffectPrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
     }
-
-    public GameObject bulletEffectPrefab;
 }
